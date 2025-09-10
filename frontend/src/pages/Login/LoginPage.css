@@ -1,0 +1,234 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* --- ROOT VARIABLES (Consistent with Dashboard) --- */
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --accent: #f093fb;
+  --danger: #ef4444;
+  --bg-dark: #0a0a0a;
+  --bg-darker: #050505;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --text-white: #ffffff;
+  --text-gray: #b3b3b3;
+  --text-muted: #7a7a7a;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --glow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* --- KEYFRAMES --- */
+@keyframes backgroundFloat {
+  0%, 100% { transform: translateY(0px) scale(1.05); }
+  50% { transform: translateY(-20px) scale(1.1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* UPDATED Shake animation for a "vibration" feel */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+
+/* --- BASE & FULLSCREEN CONTAINER --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  height: 100%;
+  overflow: hidden;
+}
+
+.login-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+  isolation: isolate;
+}
+
+/* Animated Background (Same as Dashboard) */
+.login-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(240, 147, 251, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 40% 80%, rgba(118, 75, 162, 0.06) 0%, transparent 40%);
+  animation: backgroundFloat 15s ease-in-out infinite;
+}
+
+/* --- LOGIN FORM STYLING --- */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeInUp 0.8s ease-out backwards;
+}
+
+/* Error vibration animation */
+.login-form.error {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.login-form h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Input Fields */
+.login-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-white);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+}
+
+.login-form input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Login Button */
+.login-form button {
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: var(--glow);
+}
+
+.login-form button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.2);
+}
+
+.login-form button:disabled {
+  background: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- UPDATED Link Hover Effect --- */
+.forgot-password, .signup-button {
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  align-self: flex-end; /* Aligns the 'forgot password' link to the right */
+}
+
+.signup-button {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Animated underline */
+.forgot-password::after, .signup-button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  bottom: -4px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
+}
+
+.forgot-password:hover, .signup-button:hover {
+  color: var(--accent);
+}
+
+.forgot-password:hover::after, .signup-button:hover::after {
+  transform: scaleX(1);
+}
+
+/* Bottom Signup Section */
+.signup-link {
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.signup-text {
+  color: var(--text-gray);
+  margin-bottom: 0.5rem;
+}
+
+/* Error Message */
+.error-message {
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #fca5a5;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
