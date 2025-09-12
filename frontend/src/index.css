@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Reset conflicting styles that might interfere with scrolling */
+html, body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow: auto !important;
+  overflow-x: hidden;
+}
+
+/* Ensure all main containers can scroll */
+#root {
+  min-height: 100vh;
+  height: auto;
+}
+
+/* Fix any potential z-index issues */
+.modal-backdrop {
+  z-index: 9999;
+}
+
+/* Ensure buttons are clickable */
+button {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Fix any overlay issues - REMOVED the global position: relative */
+/* This was causing the back button positioning issues */
+
+.fixed, .sticky {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+/* Add specific positioning for elements that need it */
+.header-top-bar {
+  position: relative;
+}
+
+.back-link {
+  position: relative;
+}

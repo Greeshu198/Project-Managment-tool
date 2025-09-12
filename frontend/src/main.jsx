@@ -8,6 +8,10 @@ import LoginPage from "./pages/Login/LoginPage";
 import ForgotPasswordPage from "./pages/Forgot-password/ForgotPassword"; 
 import SignupPage from "./pages/Signup/SignupPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import FriendsPage from "./pages/Friends/FriendsPage";
+import TeamsPage from "./pages/TeamsPage/TeamsPage";
+import TeamDetailPage from "./pages/TeamDetailsPage/TeamDetailsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage/ProjectDetailPage";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -19,6 +23,10 @@ createRoot(document.getElementById("root")).render(
           <Route path="/forgot-password" element={<ForgotPasswordPage />} /> 
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/friends" element={<FriendsPage />} />
+            <Route path="/teams" element={<TeamsPage />} />
+            <Route path="/teams/:teamId" element={<TeamDetailPage />} />
+            <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

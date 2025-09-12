@@ -4,6 +4,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.db import Base
 
+# --- Enums for Task Properties ---
+
 class TaskStatusEnum(enum.Enum):
     todo = "To Do"
     in_progress = "In Progress"
@@ -13,6 +15,8 @@ class TaskPriorityEnum(enum.Enum):
     low = "Low"
     medium = "Medium"
     high = "High"
+
+# --- Core Task Model ---
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -34,6 +38,8 @@ class Task(Base):
     assignee = relationship("User", back_populates="tasks_assigned", foreign_keys=[assignee_id])
     comments = relationship("Comment", back_populates="task", cascade="all, delete-orphan")
     attachments = relationship("Attachment", back_populates="task", cascade="all, delete-orphan")
+
+# --- Supporting Models for Tasks ---
 
 class Comment(Base):
     __tablename__ = "comments"
@@ -65,3 +71,4 @@ class Attachment(Base):
     # Relationships
     uploader = relationship("User", back_populates="attachments")
     task = relationship("Task", back_populates="attachments")
+

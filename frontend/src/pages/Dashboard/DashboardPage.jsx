@@ -13,37 +13,27 @@ const features = [
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const projectName = "TaskMaster";
   const navigate = useNavigate();
+  const projectName = "TaskMaster";
 
   useEffect(() => {
     const fetchUser = async () => {
-      // Check for token existence first
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setIsLoading(false);
-        return; // No token, so no user to fetch
-      }
-
       try {
-        const userData = await getCurrentUser();
-        setUser(userData);
-      } catch (err) {
-        // This likely means the token is invalid or expired
+        const token = localStorage.getItem("token");
+        if (token) {
+          const userData = await getCurrentUser();
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        setUser(null); // Ensure user is null if token is invalid
         localStorage.removeItem("token");
-        setError("Your session has expired. Please sign in again.");
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchUser();
   }, []);
-  
-  const handleProfileClick = () => {
-    navigate("/profile");
-  };
 
   if (isLoading) {
     return <div className="loading-container">Loading Dashboard...</div>;
@@ -60,28 +50,32 @@ const DashboardPage = () => {
               <Link to="/signup" className="btn btn-primary">Sign Up</Link>
             </>
           ) : (
-            <button onClick={handleProfileClick} className="btn btn-profile" title="View Profile">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </button>
+            <>
+              {/* --- 1. ADDED FRIENDS LINK --- */}
+              <Link to="/friends" className="btn btn-profile" title="Connections">
+                {/* Connections Icon (Users) */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </Link>
+              <Link to="/profile" className="btn btn-profile" title="My Profile">
+                {/* Profile Icon (User) */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </Link>
+            </>
           )}
         </nav>
       </header>
-      
+
       <main className="main-content">
         <section className="hero">
           {user ? (
-            <div className="profile-welcome">
-              <h2>Welcome back, {user.full_name}!</h2>
-              <p>Here's an overview of your projects. Let's get things done.</p>
-            </div>
+             <div className="profile-welcome">
+                <h2>Welcome back, {user.full_name || user.username}!</h2>
+                <p>Ready to tackle your tasks for the day?</p>
+             </div>
           ) : (
             <>
               <h2>Organize. Collaborate. Achieve.</h2>
               <p>TaskMaster helps your team stay productive and on track.</p>
-              {error && <p className="error-message-dashboard">{error}</p>}
               <div className="hero-buttons">
                 <Link to="/signup" className="btn btn-primary">Get Started</Link>
                 <Link to="/signin" className="btn btn-secondary">Sign In</Link>
@@ -109,4 +103,3 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-
